@@ -1,6 +1,9 @@
 const resetCandidateFilter=()=>{
-  const activeHeading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Interview slots');
+  const activeHeading=[...document.querySelectorAll('h1')].find(item=>['Interview slots','Overview'].includes(item.textContent.trim()));
   if(activeHeading)document.querySelectorAll('.admin-page-filter').forEach(item=>item.remove());
+  const overview=[...document.querySelectorAll('h1')].some(item=>item.textContent.trim()==='Overview');
+  const headerSearch=document.querySelector('.header-actions>.icon-btn:not(.notification)');
+  if(headerSearch)headerSearch.style.display=overview?'none':'';
   const heading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Candidates');
   const bookingsHeading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Bookings');
   const bar=document.querySelector('.admin-page-filter');
