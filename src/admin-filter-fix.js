@@ -1,4 +1,6 @@
 const resetCandidateFilter=()=>{
+  const activeHeading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Interview slots');
+  if(activeHeading)document.querySelectorAll('.admin-page-filter').forEach(item=>item.remove());
   const heading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Candidates');
   const bar=document.querySelector('.admin-page-filter');
   if(!heading||!bar)return;
