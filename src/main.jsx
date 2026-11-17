@@ -16,6 +16,7 @@ import './hide-stat-trends.css'
 import './admin-filter-fix.js'
 import './slot-header-cleanup.css'
 import './slot-inline-actions.css'
+import './slot-card-direct.css'
 import './admin-login.css'
 import './interval.css'
 import './candidate-detail.css'
@@ -137,6 +138,7 @@ function AdminApp({user}){
  useEffect(()=>{ const unsubscribe=subscribeToSlots((remote)=>{setSlots(remote);setSelected((old)=>old||remote[0]?.id||null);setFirebaseLive(true);setFirebaseError('')},(error)=>{setFirebaseError(error.code||'permission-denied');setFirebaseLive(false)}); return unsubscribe },[])
  useEffect(()=>{let first=true;return subscribeToBookings((items)=>{setBookings(items);if(!first&&items.length>0){const newest=items[items.length-1];setToast(`New booking received from ${newest.candidateId||'candidate'}`);setTimeout(()=>setToast(''),3200)}first=false},()=>{})},[])
  useEffect(()=>{window.__interviewBookings=bookings;return()=>{delete window.__interviewBookings}},[bookings])
+ useEffect(()=>{window.__interviewSlots=slots;return()=>{delete window.__interviewSlots}},[slots])
  useEffect(()=>{localStorage.setItem('adminActivePage',page)},[page])
  const unreadNotifications=Math.max(0,bookings.length-notificationsSeen);
  useEffect(()=>{if(page==='Notifications'&&bookings.length>notificationsSeen){setNotificationsSeen(bookings.length);localStorage.setItem('interviewNotificationsSeen',String(bookings.length))}},[page,bookings.length,notificationsSeen])
