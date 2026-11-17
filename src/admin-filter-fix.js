@@ -29,7 +29,7 @@ document.addEventListener('click',event=>{
 },true);
 document.addEventListener('input',event=>{
   const input=event.target.closest?.('.admin-page-filter input');
-  const heading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Bookings');
+  const heading=[...document.querySelectorAll('h1')].find(item=>['Bookings','Candidates'].includes(item.textContent.trim()));
   if(!input||!heading)return;
   const value=input.value.trim().toLowerCase();
   const panel=document.querySelector('.table-panel');
