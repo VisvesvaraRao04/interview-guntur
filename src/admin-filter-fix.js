@@ -9,8 +9,6 @@ const resetCandidateFilter=()=>{
   const bar=document.querySelector('.admin-page-filter');
   if(!bar)return;
   const select=bar.querySelector('select');
-  if(heading&&select&&select.style.display!=='none'){bar.remove();return}
-  if(bookingsHeading&&select&&select.style.display==='none'){bar.remove();return}
   if(select)select.style.display=heading?'none':'';
   if(!heading&&!bookingsHeading)return;
   if(select&&select.value){select.value='';select.dispatchEvent(new Event('change',{bubbles:true}))}
