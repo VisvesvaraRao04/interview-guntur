@@ -1,0 +1,1 @@
+.sidebar{height:100vh;position:sticky;top:0;overflow:hidden}.main{min-height:100vh}@media(max-width:700px){.sidebar{position:fixed;overflow-y:auto;height:100vh}}
