@@ -27,3 +27,17 @@
   .candidate-notice{font-size:11px;line-height:1.4}
   .candidate-detail-card{max-height:86vh}
 }
+@media(max-width:900px){
+  .candidate-shell .candidate-header{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 16px}
+  .candidate-shell .candidate-top-nav{display:none}
+  .candidate-shell .candidate-user>span{display:none}
+  .candidate-shell .candidate-main{width:100%;max-width:none;padding:24px 16px 92px}
+  .candidate-shell .candidate-hero h1{font-size:26px}
+  .candidate-shell .candidate-grid{display:grid;grid-template-columns:1fr!important;width:100%;gap:14px}
+  .candidate-shell .candidate-card{width:100%;min-width:0}
+  .candidate-shell .candidate-card h2{font-size:17px}
+  .candidate-shell .candidate-time{font-size:23px}
+  .candidate-shell .candidate-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .candidate-shell .candidate-bottom .btn{min-width:145px}
+  .candidate-shell .scheduled-card{width:100%;min-width:0}
+}
