@@ -3,7 +3,7 @@ const resetCandidateFilter=()=>{
   if(activeHeading)document.querySelectorAll('.admin-page-filter').forEach(item=>item.remove());
   const overview=[...document.querySelectorAll('h1')].some(item=>['Overview','Help center','Settings'].includes(item.textContent.trim()));
   const headerSearch=document.querySelector('.header-actions>.icon-btn:not(.notification)');
-  if(headerSearch)headerSearch.style.display=overview?'none':'';
+  if(headerSearch){if(overview)headerSearch.style.setProperty('display','none','important');else headerSearch.style.removeProperty('display')}
   const heading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Candidates');
   const bookingsHeading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Bookings');
   const bar=document.querySelector('.admin-page-filter');
