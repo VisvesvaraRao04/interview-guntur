@@ -1,0 +1,10 @@
+node_modules/
+dist/
+npm-temp/
+nodejs/
+firebase-debug.log
+node-v*-win-x64.zip
+npm.tgz
+firebase.cmd
+node.cmd
+npm.cmd

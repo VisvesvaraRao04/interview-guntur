@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Demo assessment rules. Replace with Firebase Authentication based rules before production.
+    match /interviewSlots/{slotId} {
+      allow read, write: if true;
+    }
+    match /bookings/{bookingId} {
+      allow read, write: if true;
+    }
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+    match /candidateBookings/{candidateId} {
+      allow read, write: if true;
+    }
+    match /slotReservations/{reservationId} {
+      allow read, write: if true;
+    }
+  }
+}
