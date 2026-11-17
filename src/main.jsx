@@ -12,6 +12,7 @@ import './candidate-mobile-polish.css'
 import './candidate-bottom-two.css'
 import './hide-activity.css'
 import './hide-volume-filter.css'
+import './admin-login.css'
 import './interval.css'
 import './candidate-detail.css'
 import './status-overrides.css'
@@ -86,6 +87,8 @@ function App(){
 }
 function AuthScreen(){
  const [mode,setMode]=useState('login');
+ const isAdminPortal=!window.location.pathname.startsWith('/candidate');
+ useEffect(()=>{document.body.classList.toggle('admin-login-portal',isAdminPortal);return()=>document.body.classList.remove('admin-login-portal')},[isAdminPortal]);
  const [name,setName]=useState('');
  const [phone,setPhone]=useState('');
  const [email,setEmail]=useState('');
