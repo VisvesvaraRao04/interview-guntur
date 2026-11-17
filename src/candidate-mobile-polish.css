@@ -1,0 +1,29 @@
+@media(max-width:700px){
+  html,body,#root{max-width:100%;overflow-x:hidden}
+  .candidate-shell{width:100%;overflow-x:hidden}
+  .candidate-header{height:62px;padding:0 15px;gap:10px;position:sticky;top:0;z-index:20}
+  .candidate-header .brand{font-size:17px;white-space:nowrap;padding:0}
+  .candidate-label{display:none}
+  .candidate-user{gap:8px;font-size:10px;min-width:0}
+  .candidate-user>span{display:none}
+  .candidate-user button{padding:7px 0}
+  .candidate-main{width:100%;padding:26px 15px 92px}
+  .candidate-hero{margin-bottom:18px}
+  .candidate-hero h1{font-size:25px;line-height:1.15}
+  .candidate-hero .muted{font-size:12px;line-height:1.5}
+  .candidate-search{width:100%;max-width:none;height:42px;margin-bottom:22px}
+  .candidate-section-title{font-size:15px;margin:20px 0 12px}
+  .candidate-grid{grid-template-columns:1fr!important;gap:12px}
+  .candidate-card{width:100%;padding:17px}
+  .candidate-card h2{font-size:16px;margin-top:18px}
+  .candidate-time{font-size:22px;display:block;margin-top:3px}
+  .candidate-meta{margin-top:15px}
+  .candidate-bottom{gap:10px}
+  .candidate-bottom .btn,.candidate-card>.btn{width:100%;min-height:40px}
+  .interval-select{height:42px;font-size:12px}
+  .scheduled-card{width:100%;padding:16px;align-items:flex-start;gap:10px}
+  .scheduled-card h2{font-size:14px;line-height:1.35}
+  .scheduled-card .status{flex-shrink:0}
+  .candidate-notice{font-size:11px;line-height:1.4}
+  .candidate-detail-card{max-height:86vh}
+}
