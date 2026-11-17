@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const app = express(); const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 app.use(cors()); app.use(express.json());
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'dist')));
 const users = []; const slots = [
  { id:'slot-1', date:'2025-07-18', startTime:'09:30', endTime:'10:00', interviewer:'Ananya Rao', interviewType:'Technical', mode:'Online', capacity:5, availableSeats:3, status:'available' },
  { id:'slot-2', date:'2025-07-18', startTime:'11:00', endTime:'11:45', interviewer:'Marcus Chen', interviewType:'Managerial', mode:'Online', capacity:5, availableSeats:0, status:'full' },
@@ -26,4 +28,8 @@ app.post('/api/bookings',auth,(req,res)=>{const slot=slots.find(s=>s.id===req.bo
 app.get('/api/bookings',auth,(req,res)=>res.json(bookings.filter(b=>req.user.role==='admin'||b.candidateId===req.user.id)));
 app.patch('/api/bookings/:id/cancel',auth,(req,res)=>{const b=bookings.find(x=>x.id===req.params.id);if(!b)return res.sendStatus(404);b.status='cancelled';const slot=slots.find(s=>s.id===b.slotId);if(slot){slot.availableSeats++;slot.status='available';io.emit('slot-cancelled',{slot,booking:b})}res.json(b)});
 io.on('connection',socket=>{socket.emit('slots-snapshot',slots);socket.on('join-role',role=>socket.join(role))});
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 const port=process.env.PORT||4000; server.listen(port,()=>console.log(`Interview API listening on http://localhost:${port}`));
