@@ -27,3 +27,11 @@ document.addEventListener('click',event=>{
   dialog.innerHTML=`<div><button class="slot-close">×</button><p class="eyebrow">INTERVIEW DETAILS</p><h2>${slot.date} · ${slot.time}</h2><p class="muted">${slot.interviewer||''} · ${slot.role||''} · ${slot.mode||''}</p><div class="slot-direct-actions"><button class="slot-edit-request">Edit slot</button><button class="slot-delete-request">Delete slot</button></div><h3>Booked candidates (${booked.length})</h3>${booked.length?booked.map(item=>`<div class="slot-booked-row"><strong>${item.candidateId||'Candidate'}</strong><span>${item.selectedStartTime||slot.startTime||''}${item.selectedEndTime?' – '+item.selectedEndTime:''} · ${item.status||'Booked'}</span></div>`).join(''):'<p class="muted">No candidates have booked this interview yet.</p>'}</div>`;
   document.body.appendChild(dialog);dialog.querySelector('.slot-close').onclick=()=>dialog.remove();dialog.onclick=e=>{if(e.target===dialog)dialog.remove()};dialog.querySelector('.slot-edit-request').onclick=()=>{dialog.remove();window.dispatchEvent(new CustomEvent('slot-edit-request',{detail:slot}))};dialog.querySelector('.slot-delete-request').onclick=()=>{dialog.remove();window.dispatchEvent(new CustomEvent('slot-delete-request',{detail:slot}))};
 },true);
+document.addEventListener('input',event=>{
+  const input=event.target.closest?.('.admin-page-filter input');
+  const heading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Bookings');
+  if(!input||!heading)return;
+  const value=input.value.trim().toLowerCase();
+  const panel=document.querySelector('.table-panel');
+  panel?.querySelectorAll('tbody tr').forEach(row=>{row.style.display=!value||row.textContent.toLowerCase().includes(value)?'':'none'});
+});
