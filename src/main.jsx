@@ -75,7 +75,42 @@ function App(){
  },[]);
  if(user===undefined)return <div className="auth-loading">Connecting to Firebase…</div>;
  return user?<AuthenticatedApp user={user}/>:<AuthScreen/>;
-}function AuthenticatedApp({user}){
+}
+function AuthScreen(){
+ const [mode,setMode]=useState('login');
+ const [name,setName]=useState('');
+ const [phone,setPhone]=useState('');
+ const [email,setEmail]=useState('');
+ const [password,setPassword]=useState('');
+ const [error,setError]=useState('');
+ const [busy,setBusy]=useState(false);
+ const isSignup=mode==='signup';
+ const submit=async(event)=>{
+  event.preventDefault();setError('');setBusy(true);
+  try{
+   const normalizedEmail=email.trim().toLowerCase();
+   if(isSignup){
+    const credential=await registerUser(normalizedEmail,password);
+    await saveUserProfile(credential.user.uid,{name:name.trim(),phone:phone.trim(),email:normalizedEmail,role:'candidate'});
+   }else await loginUser(normalizedEmail,password);
+  }catch(authError){
+   const messages={
+    'auth/invalid-email':'Enter a valid email address.',
+    'auth/invalid-credential':'Email or password is incorrect.',
+    'auth/user-not-found':'No account exists for this email. Create a candidate account first.',
+    'auth/wrong-password':'Email or password is incorrect.',
+    'auth/email-already-in-use':'An account already exists for this email. Sign in instead.',
+    'auth/weak-password':'Choose a password with at least 6 characters.',
+    'auth/too-many-requests':'Too many attempts. Wait a moment, then try again.',
+    'auth/network-request-failed':'Could not connect. Check your internet connection and try again.',
+    'permission-denied':'Could not save your candidate profile. Check Firestore permissions and try again.'
+   };
+   setError(messages[authError.code]||authError.message?.replace(/^Firebase:\s*/,'').replace(/\s*\(auth\/[^)]+\)$/,'')||'Could not sign in. Please try again.');
+  }finally{setBusy(false)}
+ };
+ return <main className="auth-shell"><div className="auth-brand"><span className="brand-mark">✣</span> Mate</div><section className="auth-card"><p className="auth-kicker">INTERVIEW SCHEDULING</p><h1>{isSignup?'Create your account':'Welcome back'}</h1><p className="muted">{isSignup?'Create a candidate account to book and manage interviews.':'Sign in to continue to your interview workspace.'}</p><form onSubmit={submit}>{isSignup&&<><label className="auth-label">Full name<input className="auth-input" type="text" autoComplete="name" required value={name} onChange={event=>setName(event.target.value)} placeholder="Your full name"/></label><label className="auth-label">Mobile number<input className="auth-input" type="tel" autoComplete="tel" required value={phone} onChange={event=>setPhone(event.target.value)} placeholder="Your mobile number"/></label></>}<label className="auth-label">Email<input className="auth-input" type="email" autoComplete="email" required value={email} onChange={event=>setEmail(event.target.value)} placeholder="you@example.com"/></label><label className="auth-label">Password<input className="auth-input" type="password" autoComplete={isSignup?'new-password':'current-password'} minLength={isSignup?6:undefined} required value={password} onChange={event=>setPassword(event.target.value)} placeholder={isSignup?'At least 6 characters':'Your password'}/></label>{error&&<p className="auth-error" role="alert">{error}</p>}<button className="btn primary full" type="submit" disabled={busy}>{busy?(isSignup?'Creating account…':'Signing in…'):(isSignup?'Create candidate account':'Sign in')}</button></form><button className="auth-switch" type="button" onClick={()=>{setMode(isSignup?'login':'signup');setError('')}}>{isSignup?'Already have an account? Sign in':'New candidate? Create an account'}</button></section></main>;
+}
+function AuthenticatedApp({user}){
  const [role,setRole]=useState(null);
  useEffect(()=>{let mounted=true;if(user.email==='admin@example.com'){setRole('admin');return()=>{mounted=false}}getUserProfile(user.uid).then(profile=>{if(mounted)setRole(profile?.role==='admin'?'admin':'candidate')}).catch(()=>{if(mounted)setRole(user.email==='admin@example.com'?'admin':'candidate')});return()=>{mounted=false}},[user.uid,user.email]);
  if(!role)return <div className="auth-loading">Loading your workspace…</div>;
