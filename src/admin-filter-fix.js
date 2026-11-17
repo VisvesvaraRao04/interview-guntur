@@ -1,7 +1,7 @@
 const resetCandidateFilter=()=>{
-  const activeHeading=[...document.querySelectorAll('h1')].find(item=>['Interview slots','Overview','Help center'].includes(item.textContent.trim()));
+  const activeHeading=[...document.querySelectorAll('h1')].find(item=>['Interview slots','Overview','Help center','Settings'].includes(item.textContent.trim()));
   if(activeHeading)document.querySelectorAll('.admin-page-filter').forEach(item=>item.remove());
-  const overview=[...document.querySelectorAll('h1')].some(item=>['Overview','Help center'].includes(item.textContent.trim()));
+  const overview=[...document.querySelectorAll('h1')].some(item=>['Overview','Help center','Settings'].includes(item.textContent.trim()));
   const headerSearch=document.querySelector('.header-actions>.icon-btn:not(.notification)');
   if(headerSearch)headerSearch.style.display=overview?'none':'';
   const heading=[...document.querySelectorAll('h1')].find(item=>item.textContent.trim()==='Candidates');
